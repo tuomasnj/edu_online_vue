@@ -47,126 +47,111 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    name:'dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: {title: '谷粒学院后台首页', icon: 'dashboard'}
     }]
   },
 
   {
-    path: '/example',
+    path: '/teacher',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
+    redirect: '/teacher/table',
+    name: 'Teacher',
+    meta: {title: '讲师管理', icon: 'el-icon-tickets'},
+    children: [{
+      path: 'table',
+      name: 'EduTeacherList',
+      component: () => import('@/views/edu/teacher/list'),
+      meta: {title: '讲师列表', icon: 'table'}
     },
-    children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'create',
+        name: 'EduTeacherCreate',
+        component: () => import('@/views/edu/teacher/save'),
+        meta: {title: '添加讲师', icon: 'el-icon-edit-outline'}
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'edit/:id',
+        name: 'EduTeacherEdit',
+        component: () => import('@/views/edu/teacher/save'),
+        meta: {title: '编辑讲师'},
+        hidden: true
       }
     ]
   },
 
   {
-    path: 'external-link',
+    path: '/subject',
     component: Layout,
-    children: [
+    redirect: '/subject/tree',
+    name: 'Subject',
+    meta: {title: '课程分类管理', icon: 'form'},
+    children: [{
+      path: 'tree',
+      name: 'SubjectTree',
+      component: () => import('@/views/edu/subject/list'),
+      meta: {title: '课程分类树状图', icon: 'tree'}
+    },
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'create',
+        name: 'SubjectAdd',
+        component: () => import('@/views/edu/subject/save'),
+        meta: {title: '添加课程分类', icon: 'el-icon-edit-outline'}
+      }
+    ]
+  },
+  {
+    path: '/course',
+    component: Layout,
+    redirect: '/course/list',
+    name: 'Course',
+    meta: {title: '课程管理', icon: 'el-icon-help'},
+    children: [{
+      path: 'list',
+      name: 'CourseList',
+      component: () => import('@/views/edu/course/list'),
+      meta: {title: '课程列表', icon: 'el-icon-s-data'}
+    },
+      {
+        path: 'info',
+        name: 'CourseAdd',
+        component: () => import('@/views/edu/course/info'),
+        meta: {title: '课程发布', icon: 'el-icon-upload'}
+      },
+      {
+        path: 'info/:id',
+        name: 'EduCourseInfoEdit',
+        component: () => import('@/views/edu/course/info'),
+        meta:{title: "编辑课程基本信息", nocaChe: true},
+        hidden: true
+      },
+      {
+        path: 'chapter/:id',
+        name: 'EduCourseChapterEdit',
+        component: () => import('@/views/edu/course/chapter'),
+        meta:{title: "编辑课程大纲", nocaChe: true},
+        hidden: true
+      },
+      {
+        path: 'publish/:id',
+        name: 'EduCoursePublishEdit',
+        component: () => import('@/views/edu/course/publish'),
+        meta:{title: "发布课程", nocaChe: true},
+        hidden: true
       }
     ]
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  {path: '*', redirect: '/404', hidden: true}
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes: constantRoutes
 })
 
