@@ -14,8 +14,11 @@
 export default {
   data() {
     return {
-      srcList:["@/"],
-      fits: "scale-down"
+      srcList:["https://education-online0101.oss-cn-nanjing.aliyuncs.com/scene/0e89076ec1644278ba332c358f6a0e84.jpg",
+      "https://education-online0101.oss-cn-nanjing.aliyuncs.com/scene/9a78d5497a954be18fabbd06bf6abc26.jpg",
+      "https://education-online0101.oss-cn-nanjing.aliyuncs.com/scene/128e4fd995c849739d1477c4bcb37f0f.jpg",
+      "https://education-online0101.oss-cn-nanjing.aliyuncs.com/scene/a9982f7441bd4e07a3b1a26af43457d9.jpg"],
+      fits: "contain"
     }
   }
 }
