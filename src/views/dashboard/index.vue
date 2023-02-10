@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
-    <el-calendar v-model="value">
+    <el-carousel indicator-position="outside">
+      <el-carousel-item v-for="src in srcList" :key="src" class="el-carousel__item">
+        <el-image :src = "src" :fit = "fits" class="el-image"></el-image>
+      </el-carousel-item>
+    </el-carousel>
+    <el-calendar>
     </el-calendar>
   </div>
 </template>
@@ -8,7 +13,10 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      srcList:["@/"],
+      fits: "scale-down"
+    }
   }
 }
 </script>
@@ -22,16 +30,13 @@ export default {
   margin: 0;
 }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+.el-carousel__item:nth-child(n) {
+  background-color: white;
 }
 
-.el-carousel__item:nth-child(2n+1) {
-  background-color: #d3dce6;
+.el-image {
+  position: relative;
+  display: inline;
+  overflow: hidden;
 }
-
-.is-selected {
-  color: #1989FA;
-}
-
 </style>

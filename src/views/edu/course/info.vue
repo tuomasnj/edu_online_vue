@@ -62,7 +62,6 @@
           <img :src="courseInfo.cover" width="20%" height="20%" object-fit="contain">
         </el-upload>
       </el-form-item>
-
       <!--富文本编辑器-->
       <el-form-item label="课程简介">
         <tinymce :height="300" v-model="courseInfo.description" placeholder=""/>
@@ -198,3 +197,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.el-upload {
+  display: inline-block;
+  text-align: left;
+  cursor: pointer;
+  outline: 0;
+}
+</style>
