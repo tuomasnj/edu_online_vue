@@ -90,7 +90,7 @@ export default {
   data() {
     return {
       courseId: "",
-      BASE_API: "http://localhost:8002",
+      BASE_API: "http://192.168.2.3:9001",
       teacherList: [],
       subjectList: [],
       subjectNestedList: [],
