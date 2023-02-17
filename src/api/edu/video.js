@@ -30,5 +30,19 @@ export default {
       url:`eduService/edu-video/getVideo/${videoId}`,
       method: 'get'
     })
+  },
+
+  deleteAliyunVideo(id){
+      return request({
+        url: `eduvod/video/removeAliyunVideo/${id}`,
+        method: 'delete'
+      })
+  },
+
+  getAliyunVideo(id){
+    return request({
+      url: `/eduvod/video/url/${id}`,
+      method:'post'
+    })
   }
 }

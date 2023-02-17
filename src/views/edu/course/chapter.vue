@@ -40,11 +40,14 @@
           <el-upload
             :on-success="handleVodUploadSuccess"
             :on-exceed="handleUploadExceed"
+            :on-remove="handleVodRemove"
+            :before-remove="beforeVodRemove"
             :action="BASE_API+'/eduvod/video/upload'"
-            :file-list = "fileList"
+            :file-list="fileList"
             :limit="1"
             class="upload-demo">
             <el-button size="small" type="primary">上传视频</el-button>
+            &nbsp;
             <el-tooltip placement="right-end">
               <div slot="content">最大支持2G，<br>
                 支持3GP、ASF、AVI、DAT、DV、FLV、F4V、<br>
@@ -54,6 +57,7 @@
               </div>
               <i class="el-icon-question"/>
             </el-tooltip>
+            <br>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -117,7 +121,9 @@ export default {
         sort: 0,
         isFree: false,
         videoSourceId: '',
-        videoOriginalName: ''
+        videoOriginalName: '',
+        fileName: '',
+        url: ''
       },
       dialogVideoFormVisible: false,//小节弹框
       formLabelWidth: "120px",
@@ -134,14 +140,29 @@ export default {
     this.getChapterVideo(this.courseId)
   },
   methods: {
+    handleVodRemove() {
+      video.deleteAliyunVideo(this.video.videoSourceId).then(response => {
+        this.$message({
+          type: 'success',
+          message: '删除视频成功！'
+        })
+        this.fileList = []
+        this.video.videoSourceId = ''
+        this.video.videoOriginalName = ''
+      })
+    },
+    beforeVodRemove(file, fileList) {
+      return this.$confirm(`确定移除${file.name}?`)
+    },
+
     //上传视频成功后回调的方法
-    handleVodUploadSuccess(response, file){
+    handleVodUploadSuccess(response, file) {
       this.video.videoSourceId = response.data.id
       this.video.videoOriginalName = file.name
     },
 
     //上传的文件超出数量限制后回调的方法
-    handleUploadExceed(){
+    handleUploadExceed() {
       this.$message.warning('想要重新上传视频请先删除已经上传的视频')
     },
     //======================================小节操作========================================================
@@ -176,15 +197,16 @@ export default {
       this.fileList = []
     },
     updateTheVideo() {
-      this.dialogVideoFormVisible = false
-
-      this.$message({
-        type: "success",
-        message: "修改小节信息成功"
+      video.updateVideo(this.video).then(response =>{
+        this.dialogVideoFormVisible = false
+        this.$message({
+          type: "success",
+          message: "修改小节信息成功"
+        })
+        this.getChapterVideo(this.courseId)
+        //清空Video实例的Id
+        this.video.id = ""
       })
-      this.getChapterVideo(this.courseId)
-      //清空Video实例的Id
-      this.video.id = ""
     },
     saveVideo() {
       this.video.courseId = this.courseId
@@ -212,7 +234,7 @@ export default {
     openVideo(chapterId) {
       //弹框
       this.openVideoDialog()
-
+      this.video.id = ''
       //设置章节id
       this.video.chapterId = chapterId
     },
